@@ -1,0 +1,24 @@
+name: Clean Excel Data
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleaning:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install libraries
+      run: |
+        pip install pandas openpyxl
+
+    - name: Run cleaning script
+      run: |
+        python clean.py

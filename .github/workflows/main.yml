@@ -1,0 +1,34 @@
+name: Clean Excel Files
+
+on:
+  push:
+    paths:
+      - "*.xlsx"
+      - "*.xls"
+
+jobs:
+  clean-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas openpyxl
+
+      - name: Run cleaning script
+        run: |
+          python clean.py
+
+      - name: Upload cleaned files as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cleaned-data
+          path: cleaned_*.xlsx
